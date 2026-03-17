@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>대학생 가계부</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <h1>대학생 가계부</h1>
+        <p class="subtitle">소비 패턴 분석 & 절약 추천</p>
+      </header>
+
+      <main>
+        <section id="summary-section" class="card summary-section">
+          <h2>이번 달 요약</h2>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="label">총 지출</span>
+              <span id="summary-expense" class="value negative">₩ 0</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">총 수입</span>
+              <span id="summary-income" class="value positive">₩ 0</span>
+            </div>
+          </div>
+          <p id="summary-month" class="summary-month"></p>
+        </section>
+
+        <section class="main-grid single">
+          <section id="form-section" class="card">
+            <h2>지출 / 수입 기록</h2>
+            <form id="transaction-form">
+              <div class="form-row">
+                <label for="type">유형</label>
+                <select id="type" name="type">
+                  <option value="expense">지출</option>
+                  <option value="income">수입</option>
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="amount">금액</label>
+                <input
+                  type="number"
+                  id="amount"
+                  name="amount"
+                  min="0"
+                  step="100"
+                  required
+                />
+              </div>
+
+              <div class="form-row">
+                <label for="date">날짜</label>
+                <input type="date" id="date" name="date" required />
+              </div>
+
+              <div class="form-row">
+                <label for="category">카테고리</label>
+                <select id="category" name="category">
+                  <!-- JS에서 지출/수입에 맞게 옵션을 동적으로 채웁니다 -->
+                </select>
+              </div>
+
+              <div class="form-row">
+                <label for="memo">메모 (선택)</label>
+                <input
+                  type="text"
+                  id="memo"
+                  name="memo"
+                  maxlength="40"
+                  placeholder="예: 점심 학식, 넷플릭스, 버스비 등"
+                />
+              </div>
+
+              <button type="submit" class="primary-button">
+                기록 저장
+              </button>
+              <p id="form-message" class="form-message"></p>
+            </form>
+          </section>
+        </section>
+
+        <section id="analysis-section" class="card">
+          <h2>카테고리별 지출 분석</h2>
+          <div id="analysis-empty" class="empty-message">
+            분석할 지출 데이터가 아직 없어요. 며칠만 꾸준히 기록해 보면 패턴을 보여줄게요.
+          </div>
+          <div id="analysis-bars" class="analysis-bars"></div>
+        </section>
+
+        <section id="calendar-section" class="card">
+          <div class="calendar-header">
+            <h2>이번 달 달력</h2>
+            <div id="calendar-month" class="calendar-month"></div>
+          </div>
+          <div class="calendar-legend">
+            <span class="legend-item">
+              <span class="dot expense-dot"></span> 지출
+            </span>
+            <span class="legend-item">
+              <span class="dot income-dot"></span> 수입
+            </span>
+          </div>
+          <div id="calendar-grid" class="calendar-grid" aria-label="월간 달력"></div>
+          <div class="calendar-stats">
+            <div class="stat">
+              <div class="stat-label">가장 지출이 많았던 날</div>
+              <div id="max-expense-day" class="stat-value">-</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">가장 수입이 많았던 날</div>
+              <div id="max-income-day" class="stat-value">-</div>
+            </div>
+          </div>
+
+          <div id="day-detail" class="day-detail" style="display: none">
+            <div class="day-detail-header">
+              <div class="day-detail-title">
+                <span id="day-detail-date"></span> 내역
+              </div>
+              <button id="day-detail-close" type="button" class="secondary-button">
+                닫기
+              </button>
+            </div>
+            <div class="day-detail-summary">
+              <div class="pill expense-pill">
+                지출 <span id="day-detail-expense">₩ 0</span>
+              </div>
+              <div class="pill income-pill">
+                수입 <span id="day-detail-income">₩ 0</span>
+              </div>
+            </div>
+            <ul id="day-detail-list" class="transaction-list"></ul>
+            <div id="day-detail-empty" class="empty-message">
+              이 날짜에는 기록이 없어요.
+            </div>
+          </div>
+        </section>
+
+        <section id="tips-section" class="card">
+          <h2>절약 팁</h2>
+          <div id="tips-container" class="tips-container"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+  </html>
+
